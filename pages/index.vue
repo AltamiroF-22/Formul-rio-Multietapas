@@ -1,5 +1,31 @@
 <template>
- <h1 class="text-orange-500 text-2xl font-semibold">olá</h1>
+    <div class="absolute bg-[url('/assets/images/bg-sidebar-mobile.svg')] md:hidden w-[100vw] h-[25dvh] top-0 bg-no-repeat bg-cover bg-center z-[-1]"></div>
+ <Container>
+    <div class="md:grid md:grid-cols-3">
+        <div class="md:bg-[url('/assets/images/bg-sidebar-desktop.svg')] bg-no-repeat bg-center bg-cover rounded-xl">
+
+        </div>
+        <div class="col-span-2">
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+            <div class="my-3">para remover</div>
+        </div>
+    </div>
+ </Container>
 </template>
 
 <script setup lang="ts">
