@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-3 text-white md:ml-7 md:mt-7">
+  <div class="flex items-center gap-3 text-white md:ml-8 md:mt-8">
     <div
       class="w-9 h-9 rounded-full flex items-center justify-center text-md font-semibold"
       :class="{

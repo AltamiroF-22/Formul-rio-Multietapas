@@ -50,6 +50,6 @@ const onBack = () => {
 };
 
 const onNext = () => {
-   step.value = (step.value + 1) as STEPS;
+  step.value = (step.value + 1) as STEPS;
 };
 </script>
