@@ -4,13 +4,8 @@ export default defineNuxtConfig({
   
   // Módulo TailwindCSS
   modules: ['@nuxtjs/tailwindcss'],
-  css: ['~/assets/css/tailwind.css','vuetify/styles'],
-  
-  // Plugins do Vuetify
-  plugins: ['~/plugins/vuetify.js'],
-  build: {
-    transpile: ['vuetify'],
-  },
+  css: ['~/assets/css/tailwind.css'],
+
   app: {
     head: {
       title: 'Formulário Multietapas',
