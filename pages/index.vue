@@ -77,6 +77,60 @@
               title="Selecione seu plano"
               subTitle="Você tem opção de contas mensais ou anuais."
             />
+            <div class="flex gap-4 justify-between mt-9 w-[94%]">
+              <PlanCard
+                title="Arcade"
+                price="9"
+                :selected="planSelected.valueOf() === 'Arcade'"
+                @handleSelect="handleSelectPlan('Arcade', 9)"
+                :isYearly="isYearly"
+              />
+              <PlanCard
+                :icon="advancedIcon"
+                title="Avançado"
+                price="12"
+                :selected="planSelected.valueOf() === 'Avançado'"
+                @handleSelect="handleSelectPlan('Avançado', 12)"
+                :isYearly="isYearly"
+              />
+              <PlanCard
+                :icon="proIcon"
+                title="Pro"
+                price="15"
+                :selected="planSelected.valueOf() === 'Pro'"
+                @handleSelect="handleSelectPlan('Pro', 15)"
+                :isYearly="isYearly"
+              />
+            </div>
+            <div
+              class="w-full p-2 bg-[#f0f6ff]/80 mt-7 gap-4 flex items-center justify-center"
+            >
+              <span
+                :class="[
+                  'text-sm font-medium',
+                  !isYearly ? 'text-[#02295a]' : ' text-gray-400',
+                ]"
+                >Mensal</span
+              >
+              <label class="relative flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  v-model="isYearly"
+                  class="sr-only peer"
+                />
+                <div class="w-14 h-7 bg-[#02295a] rounded-full"></div>
+                <div
+                  class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow-md transform transition-transform peer-checked:translate-x-7"
+                ></div>
+              </label>
+              <span
+                :class="[
+                  'text-sm font-medium',
+                  isYearly ? 'text-[#02295a]' : ' text-gray-400',
+                ]"
+                >Anual</span
+              >
+            </div>
           </div>
           <!-- STEP 3 -->
           <div v-if="step.valueOf() === 3">
@@ -95,7 +149,7 @@
 
           <!-- -------------------------------------- -->
 
-          <div class="relative mb-8">
+          <div class="relative mb-8 mt-24">
             <Button
               v-if="step.valueOf() > 1"
               class="absolute left-0"
@@ -124,6 +178,9 @@
 </template>
 
 <script setup lang="ts">
+import advancedIcon from "@/assets/images/icon-advanced.svg";
+import proIcon from "@/assets/images/icon-pro.svg";
+
 import { ref } from "vue";
 
 // Definição dos passos
@@ -133,7 +190,6 @@ const stepsData = [
   { stepName: "COMPLEMENTOS", stepNumber: 3 },
   { stepName: "RESUMO", stepNumber: 4 },
 ];
-const bodyContent = ref();
 
 // Enum com os passos começando em 1
 enum STEPS {
@@ -150,6 +206,9 @@ const step = ref<STEPS>(STEPS.YOUR_INFO);
 const name = ref("");
 const email = ref("");
 const phoneNumber = ref("");
+const planSelected = ref("Arcade");
+const planPrice = ref(9);
+const isYearly = ref(false);
 
 // Erros dos inputs
 const nameError = ref("");
@@ -179,7 +238,7 @@ const validation = () => {
   }
 };
 
-// Função de validação do e-mail
+//STEP 1   VALIDATION
 const emailValidation = () => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -202,6 +261,12 @@ const phoneNumberValidation = () => {
   phoneNumber.value.trim() === ""
     ? (phoneNumberError.value = "O número de telefone é obrigatório.")
     : (phoneNumberError.value = "");
+};
+
+const handleSelectPlan = (plan: string, price: number) => {
+  if (plan === planSelected.value) return;
+  planSelected.value = plan;
+  planPrice.value = isYearly ? price * 10 : price;
 };
 
 // Verifica se o passo está ativo
