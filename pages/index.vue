@@ -40,33 +40,33 @@
             <div class="flex flex-col gap-5 mt-7">
               <!-- Input text => name -->
               <Input
-                v-model="name"
+                v-model="formData.name"
                 inputName="name"
                 inputType="text"
                 placeholder="e.g. Stephen king"
                 label="Nome"
-                :error="!!nameError"
-                :errorMsg="nameError"
+                :error="!!errors.name"
+                :errorMsg="errors.name"
               />
               <!-- Input E-mail -->
               <Input
-                v-model="email"
+                v-model="formData.email"
                 inputName="email"
                 inputType="email"
                 placeholder="e.g. stephenking@gmail.com"
                 label="Endereço de E-mail"
-                :error="!!emailError"
-                :errorMsg="emailError"
+                :error="!!errors.email"
+                :errorMsg="errors.email"
               />
               <!-- Input Text => phone number -->
               <Input
-                v-model="phoneNumber"
+                v-model="formData.phoneNumber"
                 inputName="phonenumber"
                 inputType="text"
                 placeholder="e.g. +1 234 567 890"
                 label="Número de Telefone"
-                :error="!!phoneNumberError"
-                :errorMsg="phoneNumberError"
+                :error="!!errors.phoneNumber"
+                :errorMsg="errors.phoneNumber"
               />
             </div>
           </div>
@@ -81,52 +81,52 @@
               <PlanCard
                 title="Arcade"
                 price="9"
-                :selected="planSelected.valueOf() === 'Arcade'"
+                :selected="formData.planSelected.valueOf() === 'Arcade'"
                 @handleSelect="handleSelectPlan('Arcade', 9)"
-                :isYearly="isYearly"
+                :isYearly="formData.isYearly"
               />
               <PlanCard
                 :icon="advancedIcon"
                 title="Avançado"
                 price="12"
-                :selected="planSelected.valueOf() === 'Avançado'"
+                :selected="formData.planSelected.valueOf() === 'Avançado'"
                 @handleSelect="handleSelectPlan('Avançado', 12)"
-                :isYearly="isYearly"
+                :isYearly="formData.isYearly"
               />
               <PlanCard
                 :icon="proIcon"
                 title="Pro"
                 price="15"
-                :selected="planSelected.valueOf() === 'Pro'"
+                :selected="formData.planSelected.valueOf() === 'Pro'"
                 @handleSelect="handleSelectPlan('Pro', 15)"
-                :isYearly="isYearly"
+                :isYearly="formData.isYearly"
               />
             </div>
             <div
-              class="w-full p-2 bg-[#f0f6ff]/80 mt-7 gap-4 flex items-center justify-center"
+              class="w-full p-3 bg-[#f0f6ff]/80 mt-7 gap-5 flex items-center justify-center"
             >
               <span
                 :class="[
                   'text-sm font-medium',
-                  !isYearly ? 'text-[#02295a]' : ' text-gray-400',
+                  !formData.isYearly ? 'text-[#02295a]' : ' text-gray-400',
                 ]"
                 >Mensal</span
               >
               <label class="relative flex items-center cursor-pointer">
                 <input
                   type="checkbox"
-                  v-model="isYearly"
+                  v-model="formData.isYearly"
                   class="sr-only peer"
                 />
-                <div class="w-14 h-7 bg-[#02295a] rounded-full"></div>
+                <div class="w-12 h-6 bg-[#02295a] rounded-full"></div>
                 <div
-                  class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow-md transform transition-transform peer-checked:translate-x-7"
+                  class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md transform transition-transform peer-checked:translate-x-6"
                 ></div>
               </label>
               <span
                 :class="[
                   'text-sm font-medium',
-                  isYearly ? 'text-[#02295a]' : ' text-gray-400',
+                  formData.isYearly ? 'text-[#02295a]' : ' text-gray-400',
                 ]"
                 >Anual</span
               >
@@ -181,7 +181,7 @@
 import advancedIcon from "@/assets/images/icon-advanced.svg";
 import proIcon from "@/assets/images/icon-pro.svg";
 
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 // Definição dos passos
 const stepsData = [
@@ -202,19 +202,22 @@ enum STEPS {
 // Estado do passo atual
 const step = ref<STEPS>(STEPS.YOUR_INFO);
 
-// Estado dos inputs
-const name = ref("");
-const email = ref("");
-const phoneNumber = ref("");
-const planSelected = ref("Arcade");
-const planPrice = ref(9);
-const isYearly = ref(false);
+// Json Data
+const formData = ref({
+  name: "",
+  email: "",
+  phoneNumber: "",
+  planSelected: "Arcade",
+  planPrice: 9,
+  isYearly: false,
+});
 
 // Erros dos inputs
-const nameError = ref("");
-const emailError = ref("");
-const phoneNumberError = ref("");
-
+const errors = ref({
+  name: "",
+  email: "",
+  phoneNumber: "",
+});
 const validation = () => {
   if (step.value === 1) {
     emailValidation();
@@ -222,9 +225,9 @@ const validation = () => {
     phoneNumberValidation();
 
     if (
-      nameError.value.length ||
-      emailError.value.length ||
-      phoneNumberError.value.length > 0
+      errors.value.name.length ||
+      errors.value.email.length ||
+      errors.value.phoneNumber.length > 0
     )
       return;
 
@@ -232,43 +235,62 @@ const validation = () => {
   } else if (step.value === 2) {
     onNext();
   } else if (step.value === 3) {
+    //para fazer
     onNext();
   } else if (step.value === 4) {
-    alert("confirmou");
+    //para fazer
+    console.log({ confirmou: true, JSON: formData.value });
   }
 };
-
 //STEP 1   VALIDATION
 const emailValidation = () => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (email.value === "") {
-    emailError.value = "O e-mail é obrigatório.";
-  } else if (!emailPattern.test(email.value)) {
-    emailError.value = "E-mail inválido.";
+  if (formData.value.email === "") {
+    errors.value.email = "O e-mail é obrigatório.";
+  } else if (!emailPattern.test(formData.value.email)) {
+    errors.value.email = "E-mail inválido.";
   } else {
-    emailError.value = "";
+    errors.value.email = "";
   }
 };
 
 const nameValidation = () => {
-  name.value.trim() === ""
-    ? (nameError.value = "O nome é obrigatório.")
-    : (nameError.value = "");
+  formData.value.name.trim() === ""
+    ? (errors.value.name = "O nome é obrigatório.")
+    : (errors.value.name = "");
 };
 
 const phoneNumberValidation = () => {
-  phoneNumber.value.trim() === ""
-    ? (phoneNumberError.value = "O número de telefone é obrigatório.")
-    : (phoneNumberError.value = "");
+  formData.value.phoneNumber.trim() === ""
+    ? (errors.value.phoneNumber = "O número de telefone é obrigatório.")
+    : (errors.value.phoneNumber = "");
 };
 
 const handleSelectPlan = (plan: string, price: number) => {
-  if (plan === planSelected.value) return;
-  planSelected.value = plan;
-  planPrice.value = isYearly ? price * 10 : price;
+  formData.value.planSelected = plan;
+  formData.value.planPrice = price;
+  if (formData.value.isYearly) formData.value.planPrice = price * 10;
 };
 
+// Watcher para monitorar mudanças na variável "isYearly" e recalcular o preço do plano
+watch(
+  () => formData.value.isYearly, // Observa se o valor de "isYearly" mudou
+  (newIsYearly) => {
+    const basePrices: Record<string, number> = {
+      // Preços base dos planos
+      Arcade: 9,
+      Avançado: 12,
+      Pro: 15,
+    };
+
+    const selectedPlan = formData.value.planSelected; // Obtém o plano selecionado
+    const basePrice = basePrices[selectedPlan]; // Obtém o preço base do plano selecionado
+
+    // Atualiza o preço com base se o plano é anual ou mensal
+    formData.value.planPrice = newIsYearly ? basePrice * 10 : basePrice;
+  }
+);
 // Verifica se o passo está ativo
 const isActiveStep = (stepNumber: number) => step.value === stepNumber;
 
