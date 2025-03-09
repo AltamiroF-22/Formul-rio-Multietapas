@@ -138,6 +138,29 @@
               title="Complementos"
               subTitle="Complementos ajudam a você a ganhar mais experiência."
             />
+            <div class="flex flex-col w-full gap-4 mt-9">
+              <Ons
+                title="Serviços online"
+                subtitle="Acesse multiplos jogos"
+                :isYearly="formData.isYearly"
+                price="1"
+                :selected="true"
+              />
+              <Ons
+                title="Armazenamento maior"
+                subtitle="1TB extra em salvamentos na nuvem"
+                :isYearly="formData.isYearly"
+                price="2"
+                :selected="true"
+              />
+              <Ons
+                title="Perfil customizável"
+                subtitle="Customize temas no seu perfil"
+                :isYearly="formData.isYearly"
+                price="2"
+                :selected="false"
+              />
+            </div>
           </div>
           <!-- STEP 4 -->
           <div v-if="step.valueOf() === 4">
@@ -182,6 +205,7 @@ import advancedIcon from "@/assets/images/icon-advanced.svg";
 import proIcon from "@/assets/images/icon-pro.svg";
 
 import { ref, watch } from "vue";
+import Ons from "~/components/Ons.vue";
 
 // Definição dos passos
 const stepsData = [
@@ -210,6 +234,7 @@ const formData = ref({
   planSelected: "Arcade",
   planPrice: 9,
   isYearly: false,
+  ons:{onlineService:''}
 });
 
 // Erros dos inputs
@@ -302,4 +327,6 @@ const onBack = () => {
 const onNext = () => {
   if (step.value < 4) step.value = (step.value + 1) as STEPS;
 };
+onNext();
+onNext();
 </script>
