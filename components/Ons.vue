@@ -25,7 +25,7 @@
       </div>
     </div>
     <span class="text-[#735bc7] font-semibold text-sm">
-      +{{ isYearly ? price * 10 : price }}/{{ isYearly ? "ano" : "mês" }}</span
+      +{{ price }}/{{ isYearly ? "ano" : "mês" }}</span
     >
   </div>
 </template>
@@ -36,7 +36,7 @@ import CheckMark from "@/assets/images/icon-checkmark.svg";
 defineProps({
   title: String,
   subtitle: String,
-  price: String,
+  price: Number,
   isYearly: { type: Boolean, default: false },
   selected: { type: Boolean, default: false },
 });

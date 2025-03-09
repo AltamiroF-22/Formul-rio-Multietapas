@@ -140,25 +140,14 @@
             />
             <div class="flex flex-col w-full gap-4 mt-9">
               <Ons
-                title="Serviços online"
-                subtitle="Acesse multiplos jogos"
+                v-for="on in formData.ons"
+                :key="on.id"
+                :title="on.description"
+                :subtitle="on.subtitle"
                 :isYearly="formData.isYearly"
-                price="1"
-                :selected="true"
-              />
-              <Ons
-                title="Armazenamento maior"
-                subtitle="1TB extra em salvamentos na nuvem"
-                :isYearly="formData.isYearly"
-                price="2"
-                :selected="true"
-              />
-              <Ons
-                title="Perfil customizável"
-                subtitle="Customize temas no seu perfil"
-                :isYearly="formData.isYearly"
-                price="2"
-                :selected="false"
+                :price="on.price"
+                v-model:selected="on.selected"
+                @click="toggleSelection(on)"
               />
             </div>
           </div>
@@ -234,7 +223,29 @@ const formData = ref({
   planSelected: "Arcade",
   planPrice: 9,
   isYearly: false,
-  ons:{onlineService:''}
+  ons: [
+    {
+      id: 1,
+      description: "Serviços online",
+      subtitle: "Acesse múltiplos jogos",
+      price: 1,
+      selected: true,
+    },
+    {
+      id: 2,
+      description: "Armazenamento maior",
+      subtitle: "1TB extra em salvamentos na nuvem",
+      price: 2,
+      selected: true,
+    },
+    {
+      id: 3,
+      description: "Perfil customizável",
+      subtitle: "Customize temas no seu perfil",
+      price: 2,
+      selected: false,
+    },
+  ],
 });
 
 // Erros dos inputs
@@ -314,8 +325,17 @@ watch(
 
     // Atualiza o preço com base se o plano é anual ou mensal
     formData.value.planPrice = newIsYearly ? basePrice * 10 : basePrice;
+    formData.value.ons.forEach((on) => {
+      on.price = newIsYearly ? on.price * 10 : on.price / 10;
+    });
   }
 );
+
+//STEP 3
+const toggleSelection = (on: any) => {
+  on.selected = !on.selected;
+};
+
 // Verifica se o passo está ativo
 const isActiveStep = (stepNumber: number) => step.value === stepNumber;
 
