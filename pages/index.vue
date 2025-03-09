@@ -254,30 +254,28 @@ const errors = ref({
   email: "",
   phoneNumber: "",
 });
+
 const validation = () => {
-  if (step.value === 1) {
-    emailValidation();
-    nameValidation();
-    phoneNumberValidation();
-
-    if (
-      errors.value.name.length ||
-      errors.value.email.length ||
-      errors.value.phoneNumber.length > 0
-    )
+  switch (step.value) {
+    case 1:
+      emailValidation();
+      nameValidation();
+      phoneNumberValidation();
+      if (Object.values(errors.value).some((err) => err)) return;
+      break;
+    case 2:
+      // Validação futura, se necessário
+      break;
+    case 3:
+      // Validação futura, se necessário
+      break;
+    case 4:
+      console.log({ confirmou: true, JSON: formData.value });
       return;
-
-    onNext();
-  } else if (step.value === 2) {
-    onNext();
-  } else if (step.value === 3) {
-    //para fazer
-    onNext();
-  } else if (step.value === 4) {
-    //para fazer
-    console.log({ confirmou: true, JSON: formData.value });
   }
+  onNext();
 };
+
 //STEP 1   VALIDATION
 const emailValidation = () => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -347,6 +345,4 @@ const onBack = () => {
 const onNext = () => {
   if (step.value < 4) step.value = (step.value + 1) as STEPS;
 };
-onNext();
-onNext();
 </script>
