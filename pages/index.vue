@@ -157,11 +157,63 @@
               title="Finalizando"
               subTitle="Verifique se tudo está OK antes de confirmar."
             />
+
+            <div class="w-full p-4 bg-[#adbeff]/10 rounded-md mt-8">
+              <div class="border-b flex items-center justify-between">
+                <div class="">
+                  <h4 class="text-[#02295a] font-semibold">
+                    {{ formData.planSelected }} ({{
+                      formData.isYearly ? "Anual" : "Mensal"
+                    }})
+                  </h4>
+                  <button
+                    @click="handleGoBackToSelectPlan"
+                    class="text-[#735bc7] text-sm mb-4 font-semibold transition hover:underline"
+                  >
+                    Change
+                  </button>
+                </div>
+                <small class="text-[#02295a] font-semibold"
+                  >${{ formData.planPrice }}/{{
+                    formData.isYearly ? "ano" : "mês"
+                  }}</small
+                >
+              </div>
+
+              <div
+                v-for="on in formData.ons"
+                :class="[
+                  'items-center justify-between my-2',
+                  on.selected ? 'flex' : 'hidden',
+                ]"
+              >
+                <p class="text-xs text-gray-400">{{ on.description }}</p>
+                <small class="text-[#02295a]"
+                  >+${{ on.price }}/{{
+                    formData.isYearly ? "ano" : "mês"
+                  }}</small
+                >
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-4">
+              <p class="text-xs text-gray-400">
+                Total ({{ formData.isYearly ? "por ano" : "por mês" }})
+              </p>
+              <small class="text-[#735bc7] text-base font-bold"
+                >+${{ formData.total }}/
+                {{ formData.isYearly ? "ano" : "mês" }}</small
+              >
+            </div>
           </div>
 
+          <!-- STEP 5 -->
+          <div class="h-full" v-if="step.valueOf() === 5">
+            <ThankYou />
+          </div>
           <!-- -------------------------------------- -->
 
-          <div class="relative mb-8 mt-24">
+          <div v-if="step.valueOf() !== 5" class="relative mb-8 mt-24">
             <Button
               v-if="step.valueOf() > 1"
               class="absolute left-0"
@@ -210,6 +262,7 @@ enum STEPS {
   SELECT_PLAN = 2,
   ADD_ONS = 3,
   SUMMARY = 4,
+  THANK_YOU = 5,
 }
 
 // Estado do passo atual
@@ -246,6 +299,7 @@ const formData = ref({
       selected: false,
     },
   ],
+  total: 12,
 });
 
 // Erros dos inputs
@@ -267,10 +321,11 @@ const validation = () => {
       // Validação futura, se necessário
       break;
     case 3:
-      // Validação futura, se necessário
+      totalCalculation();
       break;
     case 4:
       console.log({ confirmou: true, JSON: formData.value });
+      onNext();
       return;
   }
   onNext();
@@ -334,6 +389,20 @@ const toggleSelection = (on: any) => {
   on.selected = !on.selected;
 };
 
+//STEP 4
+
+const handleGoBackToSelectPlan = () => {
+  step.value = 2;
+};
+
+const totalCalculation = () => {
+  const onsTotal = formData.value.ons
+    .filter((on) => on.selected) // Pega apenas os selecionados
+    .reduce((acc, on) => acc + on.price, 0); // Soma os preços
+
+  formData.value.total = formData.value.planPrice + onsTotal;
+};
+
 // Verifica se o passo está ativo
 const isActiveStep = (stepNumber: number) => step.value === stepNumber;
 
@@ -343,6 +412,6 @@ const onBack = () => {
 };
 
 const onNext = () => {
-  if (step.value < 4) step.value = (step.value + 1) as STEPS;
+  if (step.value < 5) step.value = (step.value + 1) as STEPS;
 };
 </script>
