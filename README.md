@@ -1,75 +1,92 @@
-# Nuxt Minimal Starter
+# 🚀 Minha Aplicação Vue.js
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Este é um projeto desenvolvido em Vue.js para exibir planos de assinatura com opções adicionais.
 
-## Setup
+## 📸 Prints da Aplicação
 
-Make sure to install dependencies:
+### 🌐 Acesse o Site
 
-```bash
-# npm
-npm install
+[Visitar o Site](add)
 
-# pnpm
-pnpm install
+### 💻 Prints da Tela - Desktop
 
-# yarn
-yarn install
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
 
-# bun
-bun install
-```
+  <div>
+    <img src="./printscreen/desktop/STEP-1-DESKTOP.png" alt="Tela inicial - Desktop" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/desktop/STEP-1-DESKTOP-ERROS.png" alt="Tela de erros - Desktop" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/desktop/STEP-2-DESKTOP-MONTHLY.png" alt="Tela de planos mensais - Desktop" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/desktop/STEP-2-DESKTOP-YEARLY.png" alt="Tela de planos anuais - Desktop" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/desktop/STEP-3-DESKTOP-ONS.png" alt="Tela de opções adicionais - Desktop" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/desktop/STEP-4-DESKTOP-SUMMARY.png" alt="Tela de resumo - Desktop" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/desktop/DESKTOP-THANKS.png" alt="Tela de agradecimento - Desktop" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/desktop/DESKTOP-JSONDATA.png" alt="Tela com dados JSON - Desktop" style="width: 100%;"/>
+  </div>
+  
+</div>
 
-## Development Server
+### 📱 Prints da Tela - Mobile
 
-Start the development server on `http://localhost:3000`:
+<div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
 
-```bash
-# npm
-npm run dev
+  <div>
+    <img src="./printscreen/mobile/STEP-1-MOBILE.png" alt="Tela inicial - Mobile" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/mobile/STEP-1-MOBILE-ERROS.png" alt="Tela de erros - Mobile" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/mobile/STEP-2-MOBILE-MONTHLY.png" alt="Tela de planos mensais - Mobile" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/mobile/STEP-2-MOBILE-YEARLY.png" alt="Tela de planos anuais - Mobile" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/mobile/STEP-3-MOBILE-ONS.png" alt="Tela de opções adicionais - Mobile" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/mobile/STEP-4-MOBILE-SUMMARY.png" alt="Tela de resumo - Mobile" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/mobile/MOBILE-THANKS.png" alt="Tela de agradecimento - Mobile" style="width: 100%;"/>
+  </div>
+  <div>
+    <img src="./printscreen/mobile/MOBILE-JSONDATA.png" alt="Tela com dados JSON - Mobile" style="width: 100%;"/>
+  </div>
 
-# pnpm
-pnpm dev
+</div>
 
-# yarn
-yarn dev
+<style>
+  @media (max-width: 768px) {
+    /* Mobile Layout */
+    div {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>
 
-# bun
-bun run dev
-```
+## ⚙️ Tecnologias Utilizadas
 
-## Production
+- Vue.js 3 + Vite
+- Nuxt 3.15.4
+- Tailwind CSS
+- Componentes reutilizáveis
+- Formulários reativos
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+---
