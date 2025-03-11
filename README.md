@@ -6,7 +6,7 @@ Este é um projeto desenvolvido em Vue.js para exibir planos de assinatura com o
 
 ### 🌐 Acesse o Site
 
-[Visitar o Site](add)
+[Visitar o Site](https://multi-step-form-nuxt.netlify.app/)
 
 ### 💻 Prints da Tela - Desktop
 
