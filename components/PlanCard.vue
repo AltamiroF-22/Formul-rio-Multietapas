@@ -11,7 +11,7 @@
     <div class="">
       <h4 class="text-md font-semibold text-[#02295a]">{{ title }}</h4>
       <p class="text-gray-400 text-xs font-medium">
-        ${{ isYearly ? price * 10 : price }}/{{ isYearly ? "ano" : "mês" }}
+        ${{ isYearly ? price * 10 : price }}/{{ getPeriodLabel(isYearly) }}
       </p>
       <small v-if="isYearly" class="text-xs text-[#02295a] font-medium">
         2 months free
@@ -22,6 +22,7 @@
 
 <script setup>
 import arcadeIcon from "@/assets/images/icon-arcade.svg";
+import getPeriodLabel from "~/utils/getPeriodLabel";
 
 defineProps({
   title: String,

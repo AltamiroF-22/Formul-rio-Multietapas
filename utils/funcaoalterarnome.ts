@@ -1,1 +1,0 @@
-// mes ou ano || por mes ou por ano

@@ -107,35 +107,11 @@
                 :isYearly="formData.isYearly"
               />
             </div>
-            <div
-              class="w-full p-3 bg-[#f0f6ff]/80 mt-7 gap-5 flex items-center justify-center"
-            >
-              <span
-                :class="[
-                  'text-sm font-medium',
-                  !formData.isYearly ? 'text-[#02295a]' : ' text-gray-400',
-                ]"
-                >Mensal</span
-              >
-              <label class="relative flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  v-model="formData.isYearly"
-                  class="sr-only peer"
-                />
-                <div class="w-12 h-6 bg-[#02295a] rounded-full"></div>
-                <div
-                  class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md transform transition-transform peer-checked:translate-x-6"
-                ></div>
-              </label>
-              <span
-                :class="[
-                  'text-sm font-medium',
-                  formData.isYearly ? 'text-[#02295a]' : ' text-gray-400',
-                ]"
-                >Anual</span
-              >
-            </div>
+
+            <ToggleMonthlyYearly
+              v-model="formData.isYearly"
+              :isYearly="formData.isYearly"
+            />
           </div>
           <!-- STEP 3 -->
           <div v-if="step.valueOf() === 3">
@@ -168,7 +144,7 @@
                 <div class="">
                   <h4 class="text-[#02295a] font-semibold">
                     {{ formData.planSelected }} ({{
-                      formData.isYearly ? "Anual" : "Mensal"
+                      getPeriodLabel(formData.isYearly, undefined, true)
                     }})
                   </h4>
                   <button
@@ -180,7 +156,7 @@
                 </div>
                 <small class="text-[#02295a] font-semibold"
                   >${{ formData.planPrice }}/{{
-                    formData.isYearly ? "ano" : "mês"
+                    getPeriodLabel(formData.isYearly)
                   }}</small
                 >
               </div>
@@ -195,7 +171,7 @@
                 <p class="text-xs text-gray-400">{{ on.description }}</p>
                 <small class="text-[#02295a]"
                   >+${{ on.price }}/{{
-                    formData.isYearly ? "ano" : "mês"
+                    getPeriodLabel(formData.isYearly)
                   }}</small
                 >
               </div>
@@ -203,11 +179,11 @@
 
             <div class="flex items-center justify-between p-4">
               <p class="text-xs text-gray-400">
-                Total ({{ formData.isYearly ? "por ano" : "por mês" }})
+                Total ({{ getPeriodLabel(formData.isYearly, true) }})
               </p>
               <small class="text-[#735bc7] text-base font-bold"
                 >+${{ formData.total }}/
-                {{ formData.isYearly ? "ano" : "mês" }}</small
+                {{ getPeriodLabel(formData.isYearly) }}</small
               >
             </div>
           </div>
@@ -249,9 +225,9 @@
 <script setup lang="ts">
 import advancedIcon from "@/assets/images/icon-advanced.svg";
 import proIcon from "@/assets/images/icon-pro.svg";
+import getPeriodLabel from "@/utils/getPeriodLabel";
 
 import { ref, watch } from "vue";
-import Ons from "~/components/Ons.vue";
 
 // Definição dos passos
 const stepsData = [
@@ -419,4 +395,5 @@ const onBack = () => {
 const onNext = () => {
   if (step.value < 5) step.value = (step.value + 1) as STEPS;
 };
+onNext();
 </script>

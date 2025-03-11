@@ -25,13 +25,14 @@
       </div>
     </div>
     <span class="text-[#735bc7] font-semibold text-sm">
-      +{{ price }}/{{ isYearly ? "ano" : "mês" }}</span
+      +{{ price }}/{{ getPeriodLabel(isYearly) }}</span
     >
   </div>
 </template>
 
 <script setup>
 import CheckMark from "@/assets/images/icon-checkmark.svg";
+import getPeriodLabel from "@/utils/getPeriodLabel";
 
 defineProps({
   title: String,
