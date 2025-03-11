@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-between">
+    <div class="flex flex-col md:flex-row justify-between">
       <label :for="inputName" class="text-sm font-medium text-[#02295a]">
         {{ label }}
       </label>

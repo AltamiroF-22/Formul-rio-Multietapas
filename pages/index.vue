@@ -13,7 +13,10 @@
   </div>
 
   <Container>
-    <div class="md:grid md:grid-cols-3">
+    <div
+      class="md:grid md:grid-cols-3"
+      :class="[step.valueOf() === 5 ? 'flex' : '']"
+    >
       <!-- Sidebar Desktop -->
       <div
         class="hidden md:bg-[url('/assets/images/bg-sidebar-desktop.svg')] bg-no-repeat bg-center bg-cover rounded-xl md:flex flex-col"
@@ -28,8 +31,8 @@
       </div>
 
       <!-- Conteúdo -->
-      <div class="col-span-2 flex items-center flex-col p-7">
-        <div class="flex flex-col justify-between min-h-[45vh] w-full md:px-9">
+      <div class="col-span-2 flex items-center flex-col xl:p-7 px-6 py-7">
+        <div class="flex flex-col justify-between min-h-[550px] w-full md:px-9">
           <!-- STEP 1 -->
           <div v-if="step.valueOf() === 1">
             <FormHeader
@@ -77,7 +80,9 @@
               title="Selecione seu plano"
               subTitle="Você tem opção de contas mensais ou anuais."
             />
-            <div class="flex gap-4 justify-between mt-9 w-[94%]">
+            <div
+              class="flex gap-4 justify-between mt-9 xl:w-[94%] flex-col xl:flex-row"
+            >
               <PlanCard
                 title="Arcade"
                 price="9"
@@ -170,7 +175,7 @@
                     @click="handleGoBackToSelectPlan"
                     class="text-[#735bc7] text-sm mb-4 font-semibold transition hover:underline"
                   >
-                    Change
+                    Mudar
                   </button>
                 </div>
                 <small class="text-[#02295a] font-semibold"
