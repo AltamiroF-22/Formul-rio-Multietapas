@@ -139,53 +139,10 @@
               subTitle="Verifique se tudo está OK antes de confirmar."
             />
 
-            <div class="w-full p-4 bg-[#adbeff]/10 rounded-md mt-8">
-              <div class="border-b flex items-center justify-between">
-                <div class="">
-                  <h4 class="text-[#02295a] font-semibold">
-                    {{ formData.planSelected }} ({{
-                      getPeriodLabel(formData.isYearly, undefined, true)
-                    }})
-                  </h4>
-                  <button
-                    @click="handleGoBackToSelectPlan"
-                    class="text-[#735bc7] text-sm mb-4 font-semibold transition hover:underline"
-                  >
-                    Mudar
-                  </button>
-                </div>
-                <small class="text-[#02295a] font-semibold"
-                  >${{ formData.planPrice }}/{{
-                    getPeriodLabel(formData.isYearly)
-                  }}</small
-                >
-              </div>
-
-              <div
-                v-for="on in formData.ons"
-                :class="[
-                  'items-center justify-between my-2',
-                  on.selected ? 'flex' : 'hidden',
-                ]"
-              >
-                <p class="text-xs text-gray-400">{{ on.description }}</p>
-                <small class="text-[#02295a]"
-                  >+${{ on.price }}/{{
-                    getPeriodLabel(formData.isYearly)
-                  }}</small
-                >
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between p-4">
-              <p class="text-xs text-gray-400">
-                Total ({{ getPeriodLabel(formData.isYearly, true) }})
-              </p>
-              <small class="text-[#735bc7] text-base font-bold"
-                >+${{ formData.total }}/
-                {{ getPeriodLabel(formData.isYearly) }}</small
-              >
-            </div>
+            <PlanSummary
+              :formData="formData"
+              @handleGoBackToSelectPlan="handleGoBackToSelectPlan"
+            />
           </div>
 
           <!-- STEP 5 -->
@@ -225,7 +182,6 @@
 <script setup lang="ts">
 import advancedIcon from "@/assets/images/icon-advanced.svg";
 import proIcon from "@/assets/images/icon-pro.svg";
-import getPeriodLabel from "@/utils/getPeriodLabel";
 
 import { ref, watch } from "vue";
 
@@ -378,8 +334,8 @@ const handleGoBackToSelectPlan = () => {
 
 const totalCalculation = () => {
   const onsTotal = formData.value.ons
-    .filter((on) => on.selected) // Pega apenas os selecionados
-    .reduce((acc, on) => acc + on.price, 0); // Soma os preços
+    .filter((on) => on.selected)
+    .reduce((acc, on) => acc + on.price, 0);
 
   formData.value.total = formData.value.planPrice + onsTotal;
 };
@@ -395,5 +351,4 @@ const onBack = () => {
 const onNext = () => {
   if (step.value < 5) step.value = (step.value + 1) as STEPS;
 };
-onNext();
 </script>
