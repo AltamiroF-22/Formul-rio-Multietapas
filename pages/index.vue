@@ -177,6 +177,13 @@
       </div>
     </div>
   </Container>
+  <JSONDATA v-if="jsonData" :formattedJson="formData" @close="ToggleJSONDATA" />
+  <Button
+    class="absolute bottom-0 mb-12 translate-x-[-50%] left-[50%]"
+    v-if="step.valueOf() === 5"
+    placeholder="Mostrar JSON"
+    @action="ToggleJSONDATA"
+  />
 </template>
 
 <script setup lang="ts">
@@ -350,5 +357,10 @@ const onBack = () => {
 
 const onNext = () => {
   if (step.value < 5) step.value = (step.value + 1) as STEPS;
+};
+
+const jsonData = ref(false);
+const ToggleJSONDATA = () => {
+  jsonData.value = !jsonData.value;
 };
 </script>
